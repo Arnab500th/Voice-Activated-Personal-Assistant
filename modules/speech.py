@@ -13,14 +13,19 @@ def speak(text):
         return
     print(f"Nova:{text}")
 
-    #temp file
+    # Ensure temp_audio folder exists
+    if not os.path.exists("temp_audio"):
+        os.makedirs("temp_audio")
+
+    # temp file
     filename = f"temp_{uuid.uuid4()}.mp3"
     path = f"temp_audio/{filename}"
-    tts = gTTS(text,lang="en")
-    tts.save(f"temp_audio/{filename}")
+    tts = gTTS(text, lang="en")
+    tts.save(path)
 
     playsound.playsound(path)
     os.remove(path)
+
 
 
 def listen():
