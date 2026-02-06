@@ -29,13 +29,19 @@ def show_reminders():
 
     return speech_text
 
-def delete_reminders(id):
+def delete_reminders(reminder_id):
     df = load_reminders()
-    if id == "all":
-        df = df.drop(index=list(range(len(df))))
-        df.to_csv(REMINDER_FILE, index=False)
-    else:
-        df = df.drop(index=id)
-        df.to_csv(REMINDER_FILE, index=False)
     
-    return "Reminders deleted successfully."
+    if reminder_id == "all":
+        df = df.iloc[0:0]  # empty the DataFrame
+        df.to_csv(REMINDER_FILE, index=False)
+        return "All reminders deleted successfully."
+    
+    # Drop by 'id' column, not DataFrame index
+    if reminder_id in df['id'].values:
+        df = df[df['id'] != reminder_id]
+        df.to_csv(REMINDER_FILE, index=False)
+        return f"Reminder {reminder_id} deleted successfully."
+    else:
+        return f"Reminder {reminder_id} not found."
+
