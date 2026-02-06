@@ -1,0 +1,6 @@
+SpeechRecognition
+gTTS
+playsound==1.2.2
+pandas
+word2number
+requests
